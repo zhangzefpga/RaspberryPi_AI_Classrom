@@ -76,4 +76,4 @@ tip = fuzz.defuzz(x_tip, aggregated, 'centroid')
 #计算最终小费数目
 print "It is more appropriate for you to pay",tip,"% of the meal as a tip."
 price = input("How much is this meal?")
-print tip * price * 0.01
+print tip * price * 0.01   
