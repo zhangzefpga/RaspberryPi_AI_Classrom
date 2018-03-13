@@ -1,21 +1,22 @@
+# -*-coding:UTF-8 -*-
 # Name : Tipping
 # Version : V1.0
-# Description : ÀûÓÃÄ£ºýÂß¼­ÊµÏÖ¶ÔÐ¡·ÑµÄ¼ÆËã
+# Description : åˆ©ç”¨æ¨¡ç³Šé€»è¾‘å®žçŽ°å¯¹å°è´¹çš„è®¡ç®—
 
-# µ¼Èë¿ÆÑ§¼ÆËã¿ânumpy
-# µ¼ÈëÄ£ºýÂß¼­¿âskfuzzy
+# å¯¼å…¥ç§‘å­¦è®¡ç®—åº“numpy
+# å¯¼å…¥æ¨¡ç³Šé€»è¾‘åº“skfuzzy
 import numpy as np
 import skfuzzy as fuzz
 
-# ²úÉúÄ£ºý¼¯
-# ·þÎñºÍÊ³Æ·ÖÊÁ¿Êý×ÖÁ¿»¯Îª0-10,ÀûÓÃÒ»Î¬Êý×é±íÊ¾
-# Ð¡·ÑÍ¨³£Îª²Í·ÑµÄ0-25%,ÀûÓÃÒ»Î¬Êý×é±íÊ¾
-# np.arange×÷ÓÃÊÇÉú³ÉÊý×é,ÓÃ·¨:np.arange(ÆðÊ¼Êý×Ö,½áÊøÊý×Ö,²½³¤)
+# äº§ç”Ÿæ¨¡ç³Šé›†
+# æœåŠ¡å’Œé£Ÿå“è´¨é‡æ•°å­—é‡åŒ–ä¸º0-10,åˆ©ç”¨ä¸€ç»´æ•°ç»„è¡¨ç¤º
+# å°è´¹é€šå¸¸ä¸ºé¤è´¹çš„0-25%,åˆ©ç”¨ä¸€ç»´æ•°ç»„è¡¨ç¤º
+# np.arangeä½œç”¨æ˜¯ç”Ÿæˆæ•°ç»„,ç”¨æ³•:np.arange(èµ·å§‹æ•°å­—,ç»“æŸæ•°å­—,æ­¥é•¿)
 x_qual = np.arange(0, 11, 1)
 x_serv = np.arange(0, 11, 1)
 x_tip  = np.arange(0, 26, 1)
 
-# »ñÈ¡Ê³Æ·ÖÊÁ¿µÄÊäÈëÁ¿
+# èŽ·å–é£Ÿå“è´¨é‡çš„è¾“å…¥é‡
 food_qual = input ("How is the quality of food?(0-10)")
 while (food_qual>10) or (food_qual<0):
     print("Input Error!")
@@ -23,7 +24,7 @@ while (food_qual>10) or (food_qual<0):
     if(food_qual>10) or (food_qual<0):
         print("Input Error!")
 
-# »ñÈ¡·þÎñÖÊÁ¿µÄÊäÈëÁ¿  
+# èŽ·å–æœåŠ¡è´¨é‡çš„è¾“å…¥é‡  
 serv_qual = input ("How is the quality of service?(0-10)")
 while (serv_qual>10) or (serv_qual<0):
     print("Input Error!")
@@ -31,8 +32,8 @@ while (serv_qual>10) or (serv_qual<0):
     if(serv_qual>10) or (serv_qual<0):
         print("Input Error!")
 
-# ²úÉúÁ¥Êô¶Èº¯Êý
-# fuzz.trimf×÷ÓÃÎª²úÉúÈý½ÇÐÎÁ¥Êô¶Èº¯Êý
+# äº§ç”Ÿéš¶å±žåº¦å‡½æ•°
+# fuzz.trimfä½œç”¨ä¸ºäº§ç”Ÿä¸‰è§’å½¢éš¶å±žåº¦å‡½æ•°
 qual_lo = fuzz.trimf(x_qual, [0, 0, 5])
 qual_md = fuzz.trimf(x_qual, [0, 5, 10])
 qual_hi = fuzz.trimf(x_qual, [5, 10, 10])
@@ -43,7 +44,7 @@ tip_lo = fuzz.trimf(x_tip, [0, 0, 13])
 tip_md = fuzz.trimf(x_tip, [0, 13, 25])
 tip_hi = fuzz.trimf(x_tip, [13, 25, 25])
 
-# ¸ù¾Ý¸ø¶¨ÖµµÃµ½¶ÔÓ¦Á¥Êô¶È
+# æ ¹æ®ç»™å®šå€¼å¾—åˆ°å¯¹åº”éš¶å±žåº¦
 qual_level_lo = fuzz.interp_membership(x_qual, qual_lo, food_qual)
 qual_level_md = fuzz.interp_membership(x_qual, qual_md, food_qual)
 qual_level_hi = fuzz.interp_membership(x_qual, qual_hi, food_qual)
@@ -52,11 +53,11 @@ serv_level_lo = fuzz.interp_membership(x_serv, serv_lo, serv_qual)
 serv_level_md = fuzz.interp_membership(x_serv, serv_md, serv_qual)
 serv_level_hi = fuzz.interp_membership(x_serv, serv_hi, serv_qual)
 
-# ¼ÓÈë¹æÔò. 
-# Rule 1 : or²Ù×÷ÒâÎ¶×ÅÈ¡Á½¸öÁ¥Êôº¯ÊýÖÐµÄ×î´óÖµ¡£ÎÒÃÇÀûÓÃnp.fmaxÊµÏÖor²Ù×÷·û
+# åŠ å…¥è§„åˆ™. 
+# Rule 1 : oræ“ä½œæ„å‘³ç€å–ä¸¤ä¸ªéš¶å±žå‡½æ•°ä¸­çš„æœ€å¤§å€¼ã€‚æˆ‘ä»¬åˆ©ç”¨np.fmaxå®žçŽ°oræ“ä½œç¬¦
 active_rule1 = np.fmax(qual_level_lo, serv_level_lo)
 
-# Ó¦ÓÃ¹æÔò1£¬Êä³öÏàÓ¦µÄÁ¥Êôº¯Êý£¬ÀûÓÃnp.fminÊµÏÖÓ¦ÓÃ¹æÔòÊä³ö
+# åº”ç”¨è§„åˆ™1ï¼Œè¾“å‡ºç›¸åº”çš„éš¶å±žå‡½æ•°ï¼Œåˆ©ç”¨np.fminå®žçŽ°åº”ç”¨è§„åˆ™è¾“å‡º
 tip_activation_lo = np.fmin(active_rule1, tip_lo)  
 
 # Rule 2
@@ -67,13 +68,13 @@ tip_activation_md = np.fmin(serv_level_md, tip_md)
 active_rule3 = np.fmax(qual_level_hi, serv_level_hi)
 tip_activation_hi = np.fmin(active_rule3, tip_hi)
 
-# ½«ËùÓÐÈý¸öÊä³ö³ÉÔ±º¯Êý¼¯ºÏÔÚÒ»Æð
+# å°†æ‰€æœ‰ä¸‰ä¸ªè¾“å‡ºæˆå‘˜å‡½æ•°é›†åˆåœ¨ä¸€èµ·
 aggregated = np.fmax(tip_activation_lo, np.fmax(tip_activation_md, tip_activation_hi))
 
-# ¼ÆËã³öÈ¥Ä£ºý»¯µÄ½á¹û
+# è®¡ç®—å‡ºåŽ»æ¨¡ç³ŠåŒ–çš„ç»“æžœ
 tip = fuzz.defuzz(x_tip, aggregated, 'centroid')
 
-#¼ÆËã×îÖÕÐ¡·ÑÊýÄ¿
+#è®¡ç®—æœ€ç»ˆå°è´¹æ•°ç›®
 print "It is more appropriate for you to pay",tip,"% of the meal as a tip."
 price = input("How much is this meal?")
 print tip * price * 0.01   
